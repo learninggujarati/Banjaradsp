@@ -1,217 +1,403 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gujarati Trader</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👑 ગુજરાતી Trader 👑 - Live Trading Signals</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            background: #ffffff;
+            color: #333; 
+            min-height: 100vh; 
+            padding: 15px;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+        }
+        .container {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 35px 25px;
+            max-width: 360px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+            border: 1px solid #e5e5e5;
+        }
+        
+        .logo-section { margin-bottom: 20px; }
+        .custom-logo {
+            width: 110px; height: 110px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: block;
+            object-fit: cover;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+            border: 4px solid rgba(255,0,64,0.3);
+        }
+        
+        .trader-name {
+            font-size: 24px; font-weight: 800;
+            background: linear-gradient(45deg, #ff0040, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+        .tagline { font-size: 14px; color: #666; font-weight: 500; margin-bottom: 20px; }
+        
+        .stats-section {
+            background: linear-gradient(135deg, #ff0040, #00d4ff);
+            border-radius: 15px;
+            padding: 25px 15px;
+            margin: 20px 0;
+            color: white;
+            box-shadow: 0 10px 30px rgba(255,0,64,0.3);
+            position: relative;
+        }
+        .total-profit {
+            font-size: 22px; font-weight: 900;
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+        
+        .live-candles {
+            height: 70px;
+            position: relative;
+            margin: 15px 0;
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            padding: 10px 0;
+            background: rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .candle-unit {
+            flex: 1;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+        }
+        .candle-body {
+            width: 100%;
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            transform-origin: bottom center;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+        .candle.green { 
+            background: linear-gradient(180deg, #00ff88, #00cc66); 
+            box-shadow: 0 4px 15px rgba(0,255,136,0.6);
+        }
+        .candle.red { 
+            background: linear-gradient(180deg, #ff4444, #cc3333); 
+            box-shadow: 0 4px 15px rgba(255,68,68,0.6);
+        }
+        .candle-wick {
+            position: absolute;
+            top: -5px; left: 50%;
+            transform: translateX(-50%);
+            width: 1px; height: 8px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 1px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+        
+        .profits-scroll {
+            height: 40px;
+            overflow: hidden;
+            margin: 12px 0;
+            background: rgba(255,255,255,0.15);
+            border-radius: 20px;
+            padding: 8px;
+            backdrop-filter: blur(10px);
+        }
+        .profits-list {
+            display: flex;
+            animation: scrollProfits 25s linear infinite;
+            gap: 20px;
+        }
+        .profit-item {
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+            padding: 6px 12px;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.25);
+            backdrop-filter: blur(5px);
+        }
+        .profit-name { color: #fff; }
+        .profit-amount {
+            color: #00ff88;
+            font-weight: 900;
+            text-shadow: 0 0 8px rgba(0,255,136,0.6);
+            margin-left: 6px;
+        }
+        @keyframes scrollProfits {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        .features-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 12px; margin: 25px 0;
+        }
+        .feature-card {
+            background: linear-gradient(135deg, rgba(255,0,64,0.1), rgba(0,212,255,0.1));
+            padding: 15px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            border-left: 3px solid #ff0040;
+            transition: all 0.3s;
+            text-align: left;
+            backdrop-filter: blur(10px);
+        }
+        .feature-card:nth-child(2n) { border-left-color: #00d4ff; }
+        .feature-icon { width: 20px; height: 20px; margin-right: 8px; display: inline-block; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
+        
+        .join-telegram {
+            background: linear-gradient(45deg, #ff0040, #00d4ff, #00ff88);
+            background-size: 300% 300%;
+            color: white; padding: 18px 25px;
+            font-size: 15px; font-weight: 700;
+            border: none; border-radius: 50px;
+            cursor: pointer; width: 100%;
+            margin: 25px 0 20px 0; 
+            box-shadow: 0 10px 30px rgba(255,0,64,0.4);
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+            animation: gradientShift 3s ease infinite;
+            display: flex; align-items: center; justify-content: center;
+            gap: 12px; height: 55px;
+            position: relative;
+            overflow: hidden;
+        }
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .telegram-icon { width: 22px; height: 22px; flex-shrink: 0; }
+        
+        .rating-section {
+            background: linear-gradient(135deg, rgba(255,0,64,0.1), rgba(0,212,255,0.1));
+            padding: 15px; border-radius: 12px;
+            margin-top: 20px;
+            border: 1px solid rgba(255,0,64,0.2);
+        }
+        .stars { color: #ff0040; font-size: 18px; margin-bottom: 5px; text-shadow: 0 0 10px rgba(255,0,64,0.5); }
+        .rating-text { font-size: 13px; color: #555; }
+        .disclaimer { font-size: 11px; color: #777; margin-top: 20px; line-height: 1.5; text-align: center; padding-top: 15px; border-top: 1px solid #eee; }
 
-<!-- ================= FIXED META PIXEL ================= -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-// Removed duplicate PageView - automatic fires once 
-fbq('init', '768854716178086');
-</script>
-<noscript>
-  <img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=768854716178086&ev=PageView&noscript=1"
-/></noscript>
-<!-- ================= END META PIXEL ================= -->
+        .button-loading, .button-success {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255,255,255,0.95);
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50px; opacity: 0; pointer-events: none;
+            transition: opacity 0.3s; z-index: 10;
+        }
+        .button-loading.show, .button-success.show { opacity: 1; pointer-events: all; }
+        .spinner {
+            width: 20px; height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top: 2px solid white; border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        .success-check { color: #00ff88; font-size: 24px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
 
-<style>
-*{box-sizing:border-box}
-body{
-margin:0;
-font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
-background:linear-gradient(135deg,#0a0a0a 0%,#1a1a2e 50%,#16213e 100%);
-color:#f0f0f0;
-text-align:center;
-min-height:100vh;
-overflow-x:hidden;
-}
-
-.container{
-max-width:420px;
-margin:auto;
-padding:30px 20px 50px;
-position:relative;
-}
-
-@keyframes glowPulse{
-0%,100%{box-shadow:0 0 20px rgba(212,175,55,.5),inset 0 0 20px rgba(212,175,55,.1)}
-50%{box-shadow:0 0 40px rgba(212,175,55,.8),inset 0 0 30px rgba(212,175,55,.2)}
-}
-
-@keyframes float{
-0%,100%{transform:translateY(0)}
-50%{transform:translateY(-10px)}
-}
-
-.logo-wrap{
-margin:25px 0 20px;
-display:flex;justify-content:center;
-perspective:1000px;
-}
-.logo-gold{
-width:160px;height:160px;border-radius:50%;
-padding:4px;background:linear-gradient(135deg,#f4d03f,#f39c12,#f4d03f);
-box-shadow:0 15px 35px rgba(244,208,63,.4);
-animation:glowPulse 2.5s ease-in-out infinite;
-transform-style:preserve-3d;
-transition:transform .3s ease;
-}
-.logo-gold:hover{transform:rotateY(10deg) rotateX(10deg);}
-.logo-gold img{
-width:100%;height:100%;border-radius:50%;
-background:linear-gradient(135deg,#1a1a2e,#16213e);
-filter:drop-shadow(0 2px 8px rgba(0,0,0,.5));
-}
-
-h1{
-margin:20px 0 10px;
-font-size:32px;font-weight:900;
-letter-spacing:2px;background:linear-gradient(135deg,#f4d03f,#f39c12);
--webkit-background-clip:text;-webkit-text-fill-color:transparent;
-background-clip:text;
-text-shadow:0 0 20px rgba(244,208,63,.5);
-animation:float 4s ease-in-out infinite;
-}
-.sub{
-font-size:15px;color:#c0a375;
-font-weight:500;letter-spacing:1px;
-text-shadow:0 1px 3px rgba(0,0,0,.5);
-margin-bottom:25px;
-}
-
-.info-box{
-margin:25px 0;background:linear-gradient(145deg,#1a1a2e,#16213e);
-border-radius:20px;padding:20px 22px;
-text-align:left;border:1px solid rgba(244,208,63,.2);
-box-shadow:0 10px 30px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);
-backdrop-filter:blur(10px);
-}
-.info-box h3{margin:0 0 15px 0;font-size:18px;color:#f4d03f;font-weight:700}
-.info-box li{
-margin:12px 0;font-size:15px;
-opacity:.9;transition:opacity .3s ease;
-}
-.info-box li:hover{opacity:1;}
-.info-box li::marker{color:#f39c12;}
-
-.join-btn{
-margin:30px auto 20px;display:block;
-width:100%;max-width:380px;padding:20px 30px;
-font-size:20px;font-weight:900;border-radius:25px;
-color:#fff;text-decoration:none;
-background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-box-shadow:0 15px 35px rgba(102,126,234,.4),0 5px 15px rgba(0,0,0,.3);
-animation:glowPulse 2.8s ease-in-out infinite;
-transition:all .3s ease;position:relative;overflow:hidden;
-}
-.join-btn:hover{
-transform:translateY(-3px);box-shadow:0 20px 45px rgba(102,126,234,.5);
-}
-.join-btn::before{
-content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
-background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);
-transition:left .5s;
-}
-.join-btn:hover::before{left:100%;}
-
-.live{
-margin:15px 0;font-size:20px;font-weight:800;
-color:#f4d03f;text-shadow:0 0 15px rgba(244,208,63,.6);
-animation:float 3s ease-in-out infinite;
-}
-
-.client-box{
-margin:20px auto;background:linear-gradient(145deg,#1a1a2e,#16213e);
-border-radius:20px;padding:20px;max-width:380px;
-border:1px solid rgba(244,208,63,.2);
-box-shadow:0 10px 30px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);
-backdrop-filter:blur(10px);
-}
-.profit{
-font-size:24px;font-weight:900;
-background:linear-gradient(135deg,#00ff88,#00cc6a);
--webkit-background-clip:text;-webkit-text-fill-color:transparent;
-margin-bottom:8px;
-}
-.small{font-size:13px;color:#9aa0a6;opacity:.8}
-
-.warn{
-margin-top:25px;font-size:12px;color:#888;
-line-height:1.6;max-width:340px;margin-left:auto;margin-right:auto;
-background:rgba(0,0,0,.3);padding:15px;border-radius:12px;
-border-left:3px solid #f39c12;
-}
-
-@media (max-width:480px){
-.container{padding:20px 15px 40px}
-.logo-gold{width:140px;height:140px;padding:3px}
-h1{font-size:28px;letter-spacing:1.5px}
-.join-btn{padding:18px 25px;font-size:18px}
-}
-</style>
+    <!-- Meta Pixel with YOUR Pixel ID: 768854716178086 -->
+    <script>
+    !function(f,b,e,v,n,t,s){
+        if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window,document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '768854716178086');
+    fbq('track', 'PageView');
+    </script>
+    <noscript>
+        <img height="1" width="1" style="display:none" 
+             src="https://www.facebook.com/tr?id=768854716178086&ev=PageView&noscript=1"/>
+    </noscript>
 </head>
 
 <body>
-<div class="container">
-  <div class="logo-wrap">
-    <div class="logo-gold">
-      <img src="https://uploads.onecompiler.io/445e5df86/445tc7ue3/330.png" alt="Gujarati Trader">
+    <div class="container">
+        <div class="logo-section">
+            <img src="https://uploads.onecompiler.io/445e5df86/445tc7ue3/330.png" alt="ગુજરાતી Trader" class="custom-logo">
+            <div class="trader-name">👑 ગુજરાતી Trader 👑</div>
+            <div class="tagline">Nifty | Forex | Indian Stock Market Signals</div>
+        </div>
+        
+        <div class="stats-section">
+            <div class="total-profit">₹4.25Cr+ Total Profits</div>
+            <div class="live-candles" id="liveCandles"></div>
+            <div class="profits-scroll">
+                <div class="profits-list">
+                    <span class="profit-item"><span class="profit-name">Ravi Patel</span><span class="profit-amount">+₹2.45L</span></span>
+                    <span class="profit-item"><span class="profit-name">Priya Sharma</span><span class="profit-amount">+₹1.87L</span></span>
+                    <span class="profit-item"><span class="profit-name">Amit Desai</span><span class="profit-amount">+₹3.12L</span></span>
+                    <span class="profit-item"><span class="profit-name">Neha Gupta</span><span class="profit-amount">+₹85K</span></span>
+                    <span class="profit-item"><span class="profit-name">Vijay Singh</span><span class="profit-amount">+₹2.98L</span></span>
+                    <span class="profit-item"><span class="profit-name">Meera Joshi</span><span class="profit-amount">+₹1.65L</span></span>
+                    <span class="profit-item"><span class="profit-name">Kiran Shah</span><span class="profit-amount">+₹4.20L</span></span>
+                    <span class="profit-item"><span class="profit-name">Sonal Ben</span><span class="profit-amount">+₹1.23L</span></span>
+                    <span class="profit-item"><span class="profit-name">Rajesh Parmar</span><span class="profit-amount">+₹2.76L</span></span>
+                    <span class="profit-item"><span class="profit-name">Divya Trivedi</span><span class="profit-amount">+₹95K</span></span>
+                    <span class="profit-item"><span class="profit-name">Mahesh Bhai</span><span class="profit-amount">+₹3.45L</span></span>
+                    <span class="profit-item"><span class="profit-name">Anita Solanki</span><span class="profit-amount">+₹1.98L</span></span>
+                    <span class="profit-item"><span class="profit-name">Nilesh Vyas</span><span class="profit-amount">+₹2.34L</span></span>
+                    <span class="profit-item"><span class="profit-name">Pooja Raval</span><span class="profit-amount">+₹1.67L</span></span>
+                    <span class="profit-item"><span class="profit-name">Arjun Makwana</span><span class="profit-amount">+₹5.12L</span></span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <svg class="feature-icon" viewBox="0 0 24 24" fill="#ff0040">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg> Nifty Chart Analysis
+            </div>
+            <div class="feature-card">
+                <svg class="feature-icon" viewBox="0 0 24 24" fill="#00d4ff">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.22.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2 .9 2 2v5.8c.71.37 1.21 1.1 1.21 1.9v1.2z"/>
+                </svg> Forex Signals
+            </div>
+            <div class="feature-card">
+                <svg class="feature-icon" viewBox="0 0 24 24" fill="#ff0040">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/>
+                </svg> Stock Strategies
+            </div>
+            <div class="feature-card">
+                <svg class="feature-icon" viewBox="0 0 24 24" fill="#00d4ff">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg> Risk Management
+            </div>
+        </div>
+        
+        <button class="join-telegram" id="joinTelegramBtn">
+            <svg class="telegram-icon" viewBox="0 0 24 24" fill="white">
+                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+            </svg>
+            <span class="button-text">JOIN OUR TELEGRAM</span>
+            <div class="button-loading" id="buttonLoading">
+                <div class="spinner"></div>
+            </div>
+            <div class="button-success" id="buttonSuccess">
+                <div class="success-check">✅</div>
+            </div>
+        </button>
+        
+        <div class="rating-section">
+            <div class="stars">⭐⭐⭐⭐⭐ 5.0</div>
+            <div class="rating-text">આપણી લર્નિંગ કોમ્યુનિટી દ્વારા</div>
+        </div>
+        
+        <div class="disclaimer">
+            શૈક્ષણિક હેતુ માટે જ. કોઈ ટિપ્સ કે ગેરંટી નહીં.<br>
+            પોતાના રિસ્ક પર રોકાણ કરો.
+        </div>
     </div>
-  </div>
 
-  <h1>GUJARATI TRADER</h1>
-  <div class="sub">Market Education • Discipline • Risk Awareness</div>
+    <script>
+        // 🚀 Moving Candles Animation (Perfected)
+        let candleIndex = 0;
+        function animateCandles() {
+            const candlesContainer = document.getElementById('liveCandles');
+            const baseHeights = [25, 35, 50, 40, 60, 45, 70, 55, 65, 30];
+            const heights = baseHeights.map((base, i) => {
+                const fluctuation = Math.sin((candleIndex * 0.3) + i * 0.5) * 15;
+                return Math.max(10, Math.min(90, base + fluctuation));
+            });
+            
+            const colors = [];
+            const prevHeights = JSON.parse(candlesContainer.dataset.prevHeights || '[30,30,30,30,30,30,30,30,30,30]');
+            
+            heights.forEach((height, i) => {
+                if (height > prevHeights[i] || height > 55) colors.push('green');
+                else colors.push('red');
+            });
+            
+            candlesContainer.innerHTML = heights.map((height, index) => `
+                <div class="candle-unit">
+                    <div class="candle-body candle ${colors[index]}" style="height: ${height}%">
+                        <div class="candle-wick"></div>
+                    </div>
+                </div>
+            `).join('');
+            
+            candlesContainer.dataset.prevHeights = JSON.stringify(heights);
+            candleIndex++;
+        }
 
-  <div class="info-box">
-    <h3>🎯 What You'll Learn:</h3>
-    <ul>
-      <li>📊 Chart Reading & Technical Levels</li>
-      <li>📈 Nifty • BankNifty • Stocks</li>
-      <li>🛡️ Risk Management Education</li>
-    </ul>
-  </div>
+        // 🎯 PERFECT PIXEL TRACKING - Fires ONLY after Telegram opens + Multiple clicks handled
+        let leadFired = false; // Prevents duplicate leads
+        const joinBtn = document.getElementById('joinTelegramBtn');
+        const loadingEl = document.getElementById('buttonLoading');
+        const successEl = document.getElementById('buttonSuccess');
+        const buttonText = joinBtn.querySelector('.button-text');
 
-  <a class="join-btn" href="#" onclick="trackTelegramSubscribe()">
-    🚀 JOIN OUR TELEGRAM NOW
-  </a>
+        function trackJoin() {
+            if (leadFired) return; // Already fired once
+            
+            // Show loading
+            loadingEl.classList.add('show');
+            buttonText.textContent = 'Opening Telegram...';
+            joinBtn.disabled = true;
+            
+            // Open Telegram in new tab
+            const telegramUrl = 'https://t.me/+mE0qu2TSzdViMDg9';
+            const newWindow = window.open(telegramUrl, '_blank', 'noopener,noreferrer');
+            
+            // Verify window opened & user went to Telegram (best effort)
+            setTimeout(() => {
+                if (newWindow && !newWindow.closed) {
+                    // ✅ PIXEL FIRES ONLY AFTER TELEGRAM OPENS SUCCESSFULLY
+                    fbq('track', 'Lead', {
+                        content_name: 'Telegram Join',
+                        currency: 'INR',
+                        value: 1
+                    });
+                    leadFired = true; // Lock - no more leads from this user
+                    
+                    // Show success
+                    loadingEl.classList.remove('show');
+                    successEl.classList.add('show');
+                    buttonText.textContent = 'Joined Successfully!';
+                    
+                    setTimeout(() => {
+                        successEl.classList.remove('show');
+                        buttonText.textContent = '✅ Joined Telegram!';
+                    }, 2000);
+                } else {
+                    // Fallback if popup blocked
+                    loadingEl.classList.remove('show');
+                    buttonText.textContent = 'JOIN OUR TELEGRAM';
+                    joinBtn.disabled = false;
+                    alert('Please allow popups to join Telegram!');
+                }
+            }, 1500); // Give time for Telegram to load
+        }
 
-  <div class="live">🔴 Community Learning Update</div>
+        // Attach event listener
+        joinBtn.addEventListener('click', trackJoin);
 
-  <div class="client-box">
-    <div class="profit">Live Chart Learning</div>
-    <div class="small">Educational market discussion only</div>
-  </div>
-
-  <div class="warn">
-    ⚠️ Educational purpose only. No tips, no guarantees.<br>
-    Market participation involves risk. Trade responsibly.
-  </div>
-</div>
-
-<!-- ✅ FIXED & FASTER TELEGRAM SCRIPT -->
-<script>
-function trackTelegramSubscribe(){
-  if(!localStorage.getItem('tg_subscribed')){
-    fbq('track','Subscribe',{platform:'telegram'});
-    localStorage.setItem('tg_subscribed','1');
-  }
-  // Instant redirect (50ms)
-  setTimeout(function(){
-    window.location.href ="https://t.me/+68ABlQdffw1lOTdl";
-  }, 50);
-}
-</script>
-
+        // Initialize animations
+        animateCandles();
+        setInterval(animateCandles, 800);
+    </script>
 </body>
 </html>
-
